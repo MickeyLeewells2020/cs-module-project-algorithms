@@ -1,28 +1,28 @@
+  
 #!/usr/bin/python
 
 import sys
-from collections import namedtuple
 
-Item = namedtuple('Item', ['index', 'size', 'value'])
+def making_change(amount, denominations):
+    table = [0 for _ in range(amount + 1)]
+    table[0] = 1
 
-def knapsack_solver(items, capacity):
-    # Your code here
-
-    pass
-
-
-if __name__ == '__main__':
-  if len(sys.argv) > 1:
-    capacity = int(sys.argv[2])
-    file_location = sys.argv[1].strip()
-    file_contents = open(file_location, 'r')
-    items = []
-
-    for line in file_contents.readlines():
-      data = line.rstrip().split()
-      items.append(Item(int(data[0]), int(data[1]), int(data[2])))
+    for denomination in denominations:
+        for n in range(denomination, amount + 1):
+            table[n] += table[n - denomination]
     
-    file_contents.close()
-    print(knapsack_solver(items, capacity))
-  else:
-    print('Usage: knapsack.py [filename] [capacity]')
+    return table[amount]
+
+
+# denominations = [1, 5, 10, 25, 50]
+# print(making_change(500, denominations))
+
+# if __name__ == "__main__":
+#   # Test our your implementation from the command line
+#   # with `python making_change.py [amount]` with different amounts
+#   if len(sys.argv) > 1:
+#     denominations = [1, 5, 10, 25, 50]
+#     amount = int(sys.argv[1])
+#     print("There are {ways} ways to make {amount} cents.".format(ways=making_change(amount, denominations), amount=amount))
+#   else:
+#     print("Usage: making_change.py [amount]")
